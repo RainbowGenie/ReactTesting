@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  @apply bg-gray-24 text-white font-nunito;
+}
+
+main {
+  min-height: calc(100vh - 405px);
+  @apply px-[7.5rem] py-10;
+}
+
+::-webkit-scrollbar {
+  background-color: #424242;
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fff2;
+  border-radius: 100px;
+  border: 1px solid #fff5;
+  &:hover {
+    pointer: cursor;
+    background-color: #fff5;
+  }
+}
+
+@layer base {
+  *:disabled {
+    cursor: not-allowed;
+  }
+  h3 {
+    @apply text-[34px] font-bold;
+  }
+  h4 {
+    @apply text-2xl font-bold;
+  }
+  textarea {
+    @apply bg-transparent border border-white rounded-md p-2;
+  }
+
+  select {
+    @apply bg-transparent border border-white rounded-md p-1;
+    option {
+      @apply bg-black;
+    }
+  }
+
+  hr {
+    @apply w-full bg-white;
+  }
+}
