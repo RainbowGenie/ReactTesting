@@ -39,9 +39,7 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("Last name required"),
-    email: Yup.string()
-      .email("Email must be a valid email address")
-      .required("Email is required"),
+    username: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
   });
 
@@ -49,14 +47,14 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
     initialValues: {
       firstName: "",
       lastName: "",
-      email: "",
+      username: "",
       password: "",
     },
     validationSchema: SignupSchema,
     onSubmit: () => {
       setTimeout(() => {
         setAuth(true);
-        navigate("/", { replace: true });
+        navigate("/home", { replace: true });
       }, 2000);
     },
   });
@@ -100,11 +98,11 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
             <TextField
               fullWidth
               autoComplete="username"
-              type="email"
-              label="Email address"
-              {...getFieldProps("email")}
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
+              type="username"
+              label="Username"
+              {...getFieldProps("username")}
+              error={Boolean(touched.username && errors.username)}
+              helperText={touched.username && errors.username}
             />
 
             <TextField

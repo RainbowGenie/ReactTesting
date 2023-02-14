@@ -1,11 +1,32 @@
-import { Button, Typography, Container, Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  Button,
+  Typography,
+  Container,
+  Box,
+  Snackbar,
+  Alert,
+  AlertColor,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useLocation } from "react-router-dom";
 import Logo from "../../components/Logo";
 //////////////////////////////////////
 
 const Home = ({ setAuth }: { setAuth: Function }) => {
   const theme = useTheme();
-
+  const location = useLocation();
+  const { credentialCorrect } = location.state;
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState<AlertColor>("success");
+  useEffect(() => {
+    if (credentialCorrect) {
+      setOpen(true);
+      setMessage("Login Success");
+      setSeverity("success");
+    }
+  }, [credentialCorrect]);
   return (
     <Container
       maxWidth="lg"
@@ -42,37 +63,22 @@ const Home = ({ setAuth }: { setAuth: Function }) => {
       <Button size="large" variant="contained" onClick={() => setAuth(false)}>
         Log out
       </Button>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
-
-// const comp = () => (
-//   <motion.span
-//     variants={stagger}
-//     initial="initial"
-//     animate="animate"
-//     style={{
-//       textAlign: "center",
-//       marginTop: 4,
-//       padding: 4,
-//       fontSize: "8rem",
-//       fontWeight: 500,
-//       position: "relative",
-//       letterSpacing: "-0.8rem",
-//       display: "inline-block",
-//       whiteSpace: "nowrap",
-//       [theme.breakpoints.down("sm")]: {
-//         fontSize: "4rem",
-//         letterSpacing: "-0.4rem",
-//         paddin: 0,
-//       },
-//     }}
-//   >
-//     {[..."Welcome Back"].map((l, i) => (
-//       <motion.span variants={animation} key={i}>
-//         {l}
-//       </motion.span>
-//     ))}
-//   </motion.span>
-// );
 export default Home;

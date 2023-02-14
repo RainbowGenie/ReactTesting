@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
@@ -12,6 +12,9 @@ import {
   Link,
   Stack,
   TextField,
+  Snackbar,
+  Alert,
+  AlertColor,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
@@ -34,27 +37,44 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
   const from = location.state?.from?.pathname || "/home";
 
   const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState<AlertColor>("success");
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Provide a valid email address")
-      .required("Email is required"),
+    username: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
   });
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
+    onSubmit: (values, { setSubmitting }) => {
       console.log("submitting...");
       setTimeout(() => {
         console.log("submited!!");
-        setAuth(true);
-        navigate(from, { replace: true });
+        if (
+          values.username === "incredible" &&
+          values.password === "incredible"
+        ) {
+          setAuth(true);
+          setMessage("Login Success");
+          setSeverity("success");
+          setOpen(true);
+          navigate(from, {
+            replace: true,
+            state: { credentialCorrect: true },
+          });
+        } else {
+          setMessage("Incorrect Credentials");
+          setSeverity("error");
+          setOpen(true);
+          setSubmitting(false);
+        }
       }, 2000);
     },
   });
@@ -86,11 +106,11 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
             <TextField
               fullWidth
               autoComplete="username"
-              type="email"
-              label="Email Address"
-              {...getFieldProps("email")}
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
+              type="username"
+              label="Username"
+              {...getFieldProps("username")}
+              error={Boolean(touched.username && errors.username)}
+              helperText={touched.username && errors.username}
             />
 
             <TextField
@@ -162,6 +182,20 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
           </Box>
         </Box>
       </Form>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </FormikProvider>
   );
 };
