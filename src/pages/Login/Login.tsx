@@ -1,12 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Container,
-  Typography,
-  Link,
-  Box,
-  Divider,
-  Button,
-} from "@mui/material";
+import { Container, Typography, Link, Box, Button } from "@mui/material";
 import styled from "@emotion/styled";
 import LoginForm from "../../components/LoginForm";
 import Logo from "../../components/Logo";
@@ -64,12 +57,6 @@ const Login = ({ setAuth }: { setAuth: Function }) => {
               Login to your account
             </Typography>
           </HeadingStyle>
-
-          <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              OR
-            </Typography>
-          </Divider>
 
           <LoginForm setAuth={setAuth} />
 

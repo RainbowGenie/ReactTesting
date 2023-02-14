@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <Header />
+      <Header auth={auth} setAuth={setAuth} />
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login setAuth={setAuth} />} />

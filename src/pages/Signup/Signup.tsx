@@ -1,12 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Container,
-  Typography,
-  Link,
-  Box,
-  Divider,
-  Button,
-} from "@mui/material";
+import { Container, Typography, Link, Box, Button } from "@mui/material";
 import styled from "@emotion/styled";
 
 import SignupForm from "../../components/SignupForm";
@@ -66,12 +59,6 @@ const Signup = ({ setAuth }: { setAuth: Function }) => {
               Enter your details below.
             </Typography>
           </HeadingStyle>
-
-          <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              OR
-            </Typography>
-          </Divider>
 
           <SignupForm setAuth={setAuth} />
 
