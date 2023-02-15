@@ -18,15 +18,10 @@ const data: MenuData[] = [
   { id: "1", title: "Menu 1" },
   { id: "2", title: "Menu 2" },
   { id: "3", title: "Menu 3" },
-  { id: "4", title: "Menu 4" },
+  { id: "4", title: "Menu 4" }
 ];
-export default function Header({
-  auth,
-  setAuth,
-}: {
-  auth: boolean;
-  setAuth: Function;
-}) {
+type setAuthFunction = (auth: boolean) => void;
+export default function Header({ auth, setAuth }: { auth: boolean; setAuth: setAuthFunction }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -37,9 +32,7 @@ export default function Header({
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const [anchorElAvatar, setAnchorElAvatar] = useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElAvatar, setAnchorElAvatar] = useState<null | HTMLElement>(null);
 
   const handleLogout = () => {
     setAuth(false);
@@ -68,8 +61,7 @@ export default function Header({
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenuAvatar}
-                color="inherit"
-              >
+                color="inherit">
                 <AccountCircle />
               </IconButton>
               <Menu
@@ -77,15 +69,14 @@ export default function Header({
                 anchorEl={anchorElAvatar}
                 anchorOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "right"
                 }}
                 transformOrigin={{
                   vertical: "top",
-                  horizontal: "right",
+                  horizontal: "right"
                 }}
                 open={Boolean(anchorElAvatar)}
-                onClose={handleCloseAvatar}
-              >
+                onClose={handleCloseAvatar}>
                 <MenuItem onClick={handleCloseAvatar}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
@@ -105,8 +96,7 @@ export default function Header({
             color="inherit"
             aria-controls="simple-menu"
             aria-haspopup="true"
-            onClick={handleClick}
-          >
+            onClick={handleClick}>
             Open Menu
           </Button>
           <Menu
@@ -114,8 +104,7 @@ export default function Header({
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
+            onClose={handleClose}>
             {data.map((item) => (
               <MenuItem key={item.id} onClick={handleClose}>
                 {item.title}

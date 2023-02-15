@@ -12,11 +12,11 @@ const RootStyle = styled("div")({
   background: "rgb(249, 250, 251)",
   height: "100vh",
   display: "grid",
-  placeItems: "center",
+  placeItems: "center"
 });
 
 const HeadingStyle = styled(Box)({
-  textAlign: "center",
+  textAlign: "center"
 });
 
 const ContentStyle = styled(Box)({
@@ -26,27 +26,27 @@ const ContentStyle = styled(Box)({
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",
-  background: "#fff",
+  background: "#fff"
 });
 
-let easing = [0.6, -0.05, 0.01, 0.99];
+const easing = [0.6, -0.05, 0.01, 0.99];
 const fadeInUp = {
   initial: {
     y: 40,
     opacity: 0,
-    transition: { duration: 0.6, ease: easing },
+    transition: { duration: 0.6, ease: easing }
   },
   animate: {
     y: 0,
     opacity: 1,
     transition: {
       duration: 0.6,
-      ease: easing,
-    },
-  },
+      ease: easing
+    }
+  }
 };
-
-const Signup = ({ setAuth }: { setAuth: Function }) => {
+type setAuthFunction = (auth: boolean) => void;
+const Signup = ({ setAuth }: { setAuth: setAuthFunction }) => {
   const navigate = useNavigate();
   return (
     <RootStyle>
@@ -67,8 +67,7 @@ const Signup = ({ setAuth }: { setAuth: Function }) => {
             {...fadeInUp}
             variant="body2"
             align="center"
-            sx={{ mt: 3 }}
-          >
+            sx={{ mt: 3 }}>
             Have an account?{" "}
             <Link variant="subtitle2" component={RouterLink} to="/login">
               Login

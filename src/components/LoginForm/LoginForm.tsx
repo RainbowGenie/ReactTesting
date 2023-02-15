@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom'
-import { Form, FormikProvider, useFormik } from 'formik'
-import * as Yup from 'yup'
+import { useState } from "react";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { Form, FormikProvider, useFormik } from "formik";
+import * as Yup from "yup";
 
 import {
   Box,
@@ -15,12 +15,12 @@ import {
   Snackbar,
   Alert,
   AlertColor
-} from '@mui/material'
-import { LoadingButton } from '@mui/lab'
-import { Icon } from '@iconify/react'
-import { motion } from 'framer-motion'
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Icon } from "@iconify/react";
+import { motion } from "framer-motion";
 
-let easing = [0.6, -0.05, 0.01, 0.99]
+const easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
   opacity: 1,
   y: 0,
@@ -29,54 +29,55 @@ const animate = {
     ease: easing,
     delay: 0.16
   }
-}
+};
 
-const LoginForm = ({ setAuth }: { setAuth: Function }) => {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const from = location.state?.from?.pathname || '/home'
+type setAuthFunction = (auth: boolean) => void;
+const LoginForm = ({ setAuth }: { setAuth: setAuthFunction }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/home";
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [message, setMessage] = useState('')
-  const [severity, setSeverity] = useState<AlertColor>('success')
+  const [showPassword, setShowPassword] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState<AlertColor>("success");
 
   const LoginSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
-    password: Yup.string().required('Password is required')
-  })
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required")
+  });
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       remember: true
     },
     validationSchema: LoginSchema,
     onSubmit: (values, { setSubmitting }) => {
-      console.log('submitting...')
+      console.log("submitting...");
       setTimeout(() => {
-        console.log('submited!!')
-        if (values.username === 'incredible' && values.password === 'incredible') {
-          setAuth(true)
-          setMessage('Login Success')
-          setSeverity('success')
-          setOpen(true)
+        console.log("submited!!");
+        if (values.username === "incredible" && values.password === "incredible") {
+          setAuth(true);
+          setMessage("Login Success");
+          setSeverity("success");
+          setOpen(true);
           navigate(from, {
             replace: true,
             state: { credentialCorrect: true }
-          })
+          });
         } else {
-          setMessage('Incorrect Credentials')
-          setSeverity('error')
-          setOpen(true)
-          setSubmitting(false)
+          setMessage("Incorrect Credentials");
+          setSeverity("error");
+          setOpen(true);
+          setSubmitting(false);
         }
-      }, 2000)
+      }, 2000);
     }
-  })
+  });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik
+  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -90,8 +91,8 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
           }}>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
               gap: 3
             }}
             component={motion.div}
@@ -102,7 +103,7 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
               autoComplete="username"
               type="username"
               label="Username"
-              {...getFieldProps('username')}
+              {...getFieldProps("username")}
               error={Boolean(touched.username && errors.username)}
               helperText={touched.username && errors.username}
             />
@@ -110,9 +111,9 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
             <TextField
               fullWidth
               autoComplete="current-password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               label="Password"
-              {...getFieldProps('password')}
+              {...getFieldProps("password")}
               error={Boolean(touched.password && errors.password)}
               helperText={touched.password && errors.password}
               InputProps={{
@@ -138,7 +139,7 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
               justifyContent="space-between"
               sx={{ my: 2 }}>
               <FormControlLabel
-                control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
+                control={<Checkbox {...getFieldProps("remember")} checked={values.remember} />}
                 label="Remember me"
               />
 
@@ -153,22 +154,22 @@ const LoginForm = ({ setAuth }: { setAuth: Function }) => {
               type="submit"
               variant="contained"
               loading={isSubmitting}>
-              {isSubmitting ? 'loading...' : 'Login'}
+              {isSubmitting ? "loading..." : "Login"}
             </LoadingButton>
           </Box>
         </Box>
       </Form>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={open}
         autoHideDuration={3000}
         onClose={() => setOpen(false)}>
-        <Alert onClose={() => setOpen(false)} severity={severity} sx={{ width: '100%' }}>
+        <Alert onClose={() => setOpen(false)} severity={severity} sx={{ width: "100%" }}>
           {message}
         </Alert>
       </Snackbar>
     </FormikProvider>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

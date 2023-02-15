@@ -14,7 +14,7 @@ const Dashboard = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        height: "90vh",
+        height: "90vh"
       }}
     >
       <Box sx={{ mb: 5, mt: -10 }}>
@@ -31,8 +31,8 @@ const Dashboard = () => {
           whiteSpace: "nowrap",
           [theme.breakpoints.down("sm")]: {
             fontSize: "4rem",
-            letterSpacing: "-0.4rem",
-          },
+            letterSpacing: "-0.4rem"
+          }
         }}
         gutterBottom
       >

@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Typography,
-  Container,
-  Box,
-  Snackbar,
-  Alert,
-  AlertColor,
-} from "@mui/material";
+import { Button, Typography, Container, Box, Snackbar, Alert, AlertColor } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useLocation } from "react-router-dom";
 import Logo from "../../components/Logo";
 //////////////////////////////////////
-
-const Home = ({ setAuth }: { setAuth: Function }) => {
+type setAuthFunction = (auth: boolean) => void;
+const Home = ({ setAuth }: { setAuth: setAuthFunction }) => {
   const theme = useTheme();
   const location = useLocation();
   const { credentialCorrect } = location.state;
@@ -35,9 +27,8 @@ const Home = ({ setAuth }: { setAuth: Function }) => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        height: "90vh",
-      }}
-    >
+        height: "90vh"
+      }}>
       <Box sx={{ mb: 5, mt: -10 }}>
         <Logo />
       </Box>
@@ -52,11 +43,10 @@ const Home = ({ setAuth }: { setAuth: Function }) => {
           whiteSpace: "nowrap",
           [theme.breakpoints.down("sm")]: {
             fontSize: "4rem",
-            letterSpacing: "-0.4rem",
-          },
+            letterSpacing: "-0.4rem"
+          }
         }}
-        gutterBottom
-      >
+        gutterBottom>
         Welcome Back
       </Typography>
 
@@ -68,13 +58,8 @@ const Home = ({ setAuth }: { setAuth: Function }) => {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={open}
         autoHideDuration={3000}
-        onClose={() => setOpen(false)}
-      >
-        <Alert
-          onClose={() => setOpen(false)}
-          severity={severity}
-          sx={{ width: "100%" }}
-        >
+        onClose={() => setOpen(false)}>
+        <Alert onClose={() => setOpen(false)} severity={severity} sx={{ width: "100%" }}>
           {message}
         </Alert>
       </Snackbar>

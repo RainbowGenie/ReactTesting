@@ -2,30 +2,25 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import { useNavigate } from "react-router-dom";
-import {
-  Stack,
-  Box,
-  TextField,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
+import { Stack, Box, TextField, IconButton, InputAdornment } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 
 /////////////////////////////////////////////////////////////
-let easing = [0.6, -0.05, 0.01, 0.99];
+const easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
   opacity: 1,
   y: 0,
   transition: {
     duration: 0.6,
     ease: easing,
-    delay: 0.16,
-  },
+    delay: 0.16
+  }
 };
 
-const SignupForm = ({ setAuth }: { setAuth: Function }) => {
+type setAuthFunction = (auth: boolean) => void;
+const SignupForm = ({ setAuth }: { setAuth: setAuthFunction }) => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -35,12 +30,9 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("First name required"),
-    lastName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Last name required"),
+    lastName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Last name required"),
     username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string().required("Password is required")
   });
 
   const formik = useFormik({
@@ -48,7 +40,7 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
       firstName: "",
       lastName: "",
       username: "",
-      password: "",
+      password: ""
     },
     validationSchema: SignupSchema,
     onSubmit: () => {
@@ -56,7 +48,7 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
         setAuth(true);
         navigate("/home", { replace: true });
       }, 2000);
-    },
+    }
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
@@ -70,8 +62,7 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
             initial={{ opacity: 0, y: 60 }}
             animate={animate}
             direction={{ xs: "column", sm: "row" }}
-            spacing={2}
-          >
+            spacing={2}>
             <TextField
               fullWidth
               label="First name"
@@ -93,8 +84,7 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
             spacing={3}
             component={motion.div}
             initial={{ opacity: 0, y: 40 }}
-            animate={animate}
-          >
+            animate={animate}>
             <TextField
               fullWidth
               autoComplete="username"
@@ -114,36 +104,24 @@ const SignupForm = ({ setAuth }: { setAuth: Function }) => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                    >
-                      <Icon
-                        icon={
-                          showPassword ? "eva:eye-fill" : "eva:eye-off-fill"
-                        }
-                      />
+                    <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                      <Icon icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"} />
                     </IconButton>
                   </InputAdornment>
-                ),
+                )
               }}
               error={Boolean(touched.password && errors.password)}
               helperText={touched.password && errors.password}
             />
           </Stack>
 
-          <Box
-            component={motion.div}
-            initial={{ opacity: 0, y: 20 }}
-            animate={animate}
-          >
+          <Box component={motion.div} initial={{ opacity: 0, y: 20 }} animate={animate}>
             <LoadingButton
               fullWidth
               size="large"
               type="submit"
               variant="contained"
-              loading={isSubmitting}
-            >
+              loading={isSubmitting}>
               Sign up
             </LoadingButton>
           </Box>
